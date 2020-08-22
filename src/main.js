@@ -3,7 +3,10 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-Vue.config.productionTip = false
+import 'bootstrap/dist/css/bootstrap-grid.css';
+import '@fortawesome/fontawesome-free/css/all.css';
+
+Vue.config.productionTip = false;
 
 new Vue({
   router,
