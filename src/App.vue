@@ -24,6 +24,8 @@
 
 <style lang="scss">
 @import "./assets/css/style.scss";
+@import '~js-datepicker/src/datepicker';
+
 
 .nav {
   width: 100%;

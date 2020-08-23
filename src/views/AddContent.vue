@@ -5,11 +5,46 @@
         <div class="content">
           <h1>Add Content</h1>
           <div class="form-wrapper">
-            <input type="text" />
+            <div class="row">
+              <div class="col-6">
+                <label for="type">Content Type</label>
+                <select id="type" v-model="form.type">
+                  <option value="article">Article</option>
+                  <option value="note">Note</option>
+                </select>
+              </div>
+            </div>
+            <div class="divider"></div>
+            <div class="row">
+              <div class="col-12" v-if="form.type == 'article'">
+                <label for="url">Original URL</label>
+                <input type="text" id="url" />
+              </div>
+              <div class="col-6">
+                <label for="author">Author</label>
+                <input type="text" id="author" />
+              </div>
+              <div class="col-6">
+                <label for="date">Date</label>
+                <input type="text" id="date" autocomplete="off" />
+              </div>
+            </div>
           </div>
           <div class="form-wrapper article-form-wrapper">
-            <textarea id="title" ref="title" placeholder="Enter title here..." v-model="form.title"></textarea>
-            <textarea id="content" ref="content" placeholder="Enter content here..." v-model="form.content"></textarea>
+            <textarea
+              id="title"
+              ref="title"
+              placeholder="Enter title here..."
+              rows="1"
+              v-model="form.title"
+            ></textarea>
+            <textarea
+              id="content"
+              ref="content"
+              placeholder="Enter content here..."
+              rows="5"
+              v-model="form.content"
+            ></textarea>
           </div>
         </div>
       </div>
@@ -18,14 +53,25 @@
 </template>
 
 <script>
+import datepicker from "js-datepicker";
+
 export default {
   data: function () {
     return {
       form: {
+        type: "article",
         title: "",
         content: "",
       },
     };
+  },
+  mounted() {
+    datepicker("#date", {
+      formatter: (input, date) => {
+        const value = date.toLocaleDateString();
+        input.value = value;
+      },
+    });
   },
   watch: {
     "form.title": function () {
@@ -51,6 +97,12 @@ export default {
   background-color: #fff;
   box-sizing: border-box;
   padding: 40px 60px;
+  .divider {
+    height: 1px;
+    width: 100%;
+    margin: 30px 0;
+    background-color: rgb(238, 238, 238);
+  }
 }
 .article-form-wrapper {
   min-height: 500px;
@@ -73,10 +125,5 @@ export default {
   #content {
     font-size: 20px;
   }
-}
-
-input[type="text"]:focus,
-textarea:focus {
-  outline: none;
 }
 </style>
