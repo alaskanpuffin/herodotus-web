@@ -13,6 +13,12 @@ Vue.use(VueRouter)
     path: '/add',
     name: 'AddContent',
     component: () => import('../views/AddContent.vue')
+  },
+  {
+    path: '/content/:id',
+    name: 'ViewContent',
+    props: true,
+    component: () => import('../views/ViewContent.vue')
   }
 ]
 

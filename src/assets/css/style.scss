@@ -28,7 +28,7 @@ html {
 }
 
 
-input[type="text"]:focus,
+input:focus,
 textarea:focus, select:focus {
   outline: none;
 }
@@ -47,4 +47,24 @@ input[type="text"], select {
     width: 100%;
     box-shadow: 0 1px 2px rgb(240, 240, 240) inset;
     border: solid rgb(224, 224, 224) 1px;
+}
+input[type="submit"] {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 0;
+    color: #FFF;
+    background-color: #95958c;
+    border-radius: 5px;
+    width: 100px;
+    margin-top: 30px;
+    box-shadow: 0 1px 3px rgb(240, 240, 240);
+    cursor: pointer;
+}
+.pristine-error {
+    color: rgb(224, 94, 94);
+}
+
+.form-group {
+    margin-bottom: 20px;
 }

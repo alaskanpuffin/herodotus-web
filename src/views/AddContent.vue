@@ -3,49 +3,71 @@
     <div class="row">
       <div class="col-12 mt-5">
         <div class="content">
-          <h1>Add Content</h1>
-          <div class="form-wrapper">
-            <div class="row">
-              <div class="col-6">
-                <label for="type">Content Type</label>
-                <select id="type" v-model="form.type">
-                  <option value="article">Article</option>
-                  <option value="note">Note</option>
-                </select>
+          <form @submit.prevent="submitForm" novalidate="true" id="content-form">
+            <h1>Add Content</h1>
+            <div class="form-wrapper">
+              <div class="row">
+                <div class="col-6 form-group">
+                  <label for="type">Content Type</label>
+                  <select id="type" v-model="form.content_type">
+                    <option value="article">Article</option>
+                    <option value="note">Note</option>
+                  </select>
+                </div>
+              </div>
+              <div class="divider"></div>
+              <div class="row">
+                <div class="col-12 form-group" v-if="form.content_type == 'article'">
+                  <label for="url">Original URL</label>
+                  <input type="text" id="url" v-model="form.url" autocomplete="off" />
+                </div>
+                <div class="col-6 form-group">
+                  <label for="author">Author</label>
+                  <input type="text" id="author" v-model="form.author" autocomplete="off" />
+                </div>
+                <div class="col-6 form-group">
+                  <label for="date">Date</label>
+                  <input
+                    type="text"
+                    id="date"
+                    autocomplete="off"
+                    name="date"
+                    maxlength="10"
+                    placeholder="mm/dd/YYYY"
+                    v-model="form.date"
+                  />
+                </div>
               </div>
             </div>
-            <div class="divider"></div>
-            <div class="row">
-              <div class="col-12" v-if="form.type == 'article'">
-                <label for="url">Original URL</label>
-                <input type="text" id="url" />
+            <div class="form-wrapper article-form-wrapper">
+              <div class="form-group">
+                <textarea
+                  id="title"
+                  ref="title"
+                  placeholder="Enter title here..."
+                  rows="1"
+                  v-model="form.title"
+                  required
+                  maxlength="300"
+                ></textarea>
               </div>
-              <div class="col-6">
-                <label for="author">Author</label>
-                <input type="text" id="author" />
+              <div class="form-group">
+                <textarea
+                  id="content"
+                  ref="content"
+                  placeholder="Enter content here..."
+                  rows="5"
+                  v-model="form.content"
+                  required
+                ></textarea>
               </div>
-              <div class="col-6">
-                <label for="date">Date</label>
-                <input type="text" id="date" autocomplete="off" />
+              <div class="row">
+                <div class="col-12">
+                  <input type="submit" />
+                </div>
               </div>
             </div>
-          </div>
-          <div class="form-wrapper article-form-wrapper">
-            <textarea
-              id="title"
-              ref="title"
-              placeholder="Enter title here..."
-              rows="1"
-              v-model="form.title"
-            ></textarea>
-            <textarea
-              id="content"
-              ref="content"
-              placeholder="Enter content here..."
-              rows="5"
-              v-model="form.content"
-            ></textarea>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -53,27 +75,76 @@
 </template>
 
 <script>
-import datepicker from "js-datepicker";
+import IMask from "imask";
+import axios from "axios";
+import Pristine from "pristinejs";
 
 export default {
   data: function () {
     return {
       form: {
-        type: "article",
+        content_type: "article",
         title: "",
         content: "",
+        url: "",
+        author: "",
+        date: null,
       },
+      pristine: null,
+      loading: false,
     };
   },
+  methods: {
+    submitForm: function () {
+      if (this.pristine.validate() == true) {
+        axios
+          .post("http://172.20.191.165:8081/content/", this.form)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
+  },
   mounted() {
-    datepicker("#date", {
-      formatter: (input, date) => {
-        const value = date.toLocaleDateString();
-        input.value = value;
+    var date_element = document.getElementById("date");
+    IMask(date_element, {
+      mask: "m/d/Y",
+      overwrite: true,
+      blocks: {
+        d: {
+          mask: IMask.MaskedRange,
+          from: 1,
+          to: 31,
+          maxLength: 2,
+        },
+        m: {
+          mask: IMask.MaskedRange,
+          from: 1,
+          to: 12,
+          maxLength: 2,
+        },
+        Y: {
+          mask: IMask.MaskedRange,
+          from: 1000,
+          to: 9999,
+          maxLength: 4,
+        },
       },
     });
+
+    var form = document.getElementById("content-form");
+
+    this.pristine = new Pristine(form, { errorClass: "error" }, true);
   },
   watch: {
+    "form.date": function () {
+      if (this.form.date == "") {
+        this.form.date = null;
+      }
+    },
     "form.title": function () {
       this.$refs.title.style.height = "auto";
       this.$refs.title.style.height = this.$refs.title.scrollHeight + "px";
@@ -105,7 +176,6 @@ export default {
   }
 }
 .article-form-wrapper {
-  min-height: 500px;
   transition: 2s;
   textarea {
     border: solid 1px #fff;
@@ -120,10 +190,12 @@ export default {
   #title {
     font-size: 30px;
     font-weight: bold;
-    margin-bottom: 20px;
   }
   #content {
     font-size: 20px;
   }
+}
+.form-group.error textarea {
+  border-bottom: solid rgb(224, 94, 94) 3px;
 }
 </style>

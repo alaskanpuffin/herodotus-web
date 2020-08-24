@@ -24,8 +24,6 @@
 
 <style lang="scss">
 @import "./assets/css/style.scss";
-@import '~js-datepicker/src/datepicker';
-
 
 .nav {
   width: 100%;
@@ -36,6 +34,7 @@
     float: left;
   }
   .logo {
+    height: 70px;
     img {
       height: 40px;
       margin: 15px 30px;

@@ -1,18 +1,36 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="home">
+    <div class="container">
+      <div class="row mt-5">
+        <card-content v-for="card in content" :card="card" :key="card.id" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import CardContent from "@/components/CardContent.vue";
+import axios from "axios";
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    CardContent,
+  },
+  data: function () {
+    return {
+      content: null,
+    };
+  },
+  mounted() {
+    axios
+      .get("http://172.20.191.165:8081/content/")
+      .then(response => (
+        this.content = response.data
+      ))
+      .catch(function (error) {
+        console.log(error);
+      });
+  },
+};
 </script>
