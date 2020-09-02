@@ -15,6 +15,11 @@ Vue.use(VueRouter)
     component: () => import('../views/AddContent.vue')
   },
   {
+    path: '/login',
+    name: 'Login',
+    component: () => import('../views/Login.vue')
+  },
+  {
     path: '/content/:id',
     name: 'ViewContent',
     props: true,

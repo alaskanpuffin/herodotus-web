@@ -19,7 +19,12 @@
               <div class="row">
                 <div class="col-12 form-group" v-if="form.content_type == 'article'">
                   <label for="url">Original URL</label>
-                  <input type="text" id="url" v-model="form.url" autocomplete="off" />
+                  <div class="input-wrapper">
+                    <input type="text" id="url" v-model="form.url" autocomplete="off" />
+                    <a id="scrape-article" v-on:click="scrapeArticle" v-if="form.url != ''">
+                      <i class="fa fa-download"></i>
+                    </a>
+                  </div>
                 </div>
                 <div class="col-6 form-group">
                   <label for="author">Author</label>
@@ -78,6 +83,7 @@
 import IMask from "imask";
 import axios from "axios";
 import Pristine from "pristinejs";
+import toastr from "toastr";
 
 export default {
   data: function () {
@@ -92,18 +98,46 @@ export default {
       },
       pristine: null,
       loading: false,
+      scrapeLoading: false,
     };
   },
   methods: {
     submitForm: function () {
       if (this.pristine.validate() == true) {
         axios
-          .post("http://172.20.191.165:8081/content/", this.form)
-          .then(function (response) {
+          .post(process.env.VUE_APP_API_ROOT + "/content/", this.form)
+          .then((response) => {
             console.log(response);
+            this.form.content = "";
+            this.form.title = "";
+            this.form.date = "";
+            this.form.author = "";
+            this.form.url = "";
+            toastr.success("The article was successfully added.");
           })
-          .catch(function (error) {
+          .catch((error) => {
             console.log(error);
+            toastr.error("An error has occured.");
+          });
+      }
+    },
+    scrapeArticle: function () {
+      if (this.scrapeLoading == false) {
+        this.scrapeLoading = true;
+        axios
+          .get(process.env.HERODOTUS_API_ROOT + "/scrapearticle/?url=" + this.form.url)
+          .then((response) => {
+            this.form.content = response.data.content;
+            this.form.title = response.data.title;
+            this.form.date = response.data.date;
+            this.form.author = response.data.author;
+            this.scrapeLoading = false;
+            toastr.success("The website was successfully scraped.");
+          })
+          .catch((error) => {
+            this.scrapeLoading = false;
+            console.log(error);
+            toastr.error("An error occured scraping the website.");
           });
       }
     },
@@ -160,6 +194,26 @@ export default {
 <style lang="scss" scoped>
 .content {
   margin: 10px inherit;
+}
+#scrape-article {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  font-size: 16px;
+  border: none;
+  border-radius: 0;
+  color: #fff;
+  background-color: #95958c;
+  border-radius: 5px;
+  text-align: center;
+  box-shadow: 0 1px 3px rgb(240, 240, 240);
+  cursor: pointer;
+  &:focus {
+    outline: none;
+  }
 }
 .form-wrapper {
   margin: 25px 0;

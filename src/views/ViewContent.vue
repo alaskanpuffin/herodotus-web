@@ -1,7 +1,9 @@
 <template>
   <div class="container mt-5 mb-5">
     <div class="row">
-      <div class="col-12" id="content">
+      <loader v-if="loading == true"></loader>
+      <error v-if="error == true" :text="errorText"></error>
+      <div v-if="content != null" class="col-12" id="content">
         <h1>{{ content.title }}</h1>
         <div class="divider"></div>
         <p v-for="line in content.content.split('\n')" :key="line">{{ line }}</p>
@@ -12,22 +14,39 @@
 
 <script>
 import axios from "axios";
+import Loader from "@/components/Loader.vue";
+import Error from "@/components/Error.vue";
 
 export default {
+  name: "ViewContent",
+  components: {
+    Loader,
+    Error,
+  },
   props: {
-    id: Number,
+    id: String,
   },
   data: function () {
     return {
       content: null,
+      loading: true,
+      error: false,
+      errorText: 'An error has occured, please try again.',
     };
   },
   mounted() {
     axios
-      .get("http://172.20.191.165:8081/content/" + this.id + "/")
-      .then((response) => (this.content = response.data))
-      .catch(function (error) {
-        console.log(error);
+      .get(process.env.VUE_APP_API_ROOT + "/content/" + this.id + "/")
+      .then((response) => {
+        this.content = response.data;
+        this.loading = false;
+      })
+      .catch((error) => {
+        this.loading = false;
+        this.error = true;
+        if (error.response.status == 404) {
+          this.errorText = 'This article does not exist.'
+        }
       });
   },
 };
