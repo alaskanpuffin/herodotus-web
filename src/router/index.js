@@ -24,7 +24,13 @@ Vue.use(VueRouter)
     name: 'ViewContent',
     props: true,
     component: () => import('../views/ViewContent.vue')
-  }
+  },
+  {
+    path: '/edit/:id',
+    name: 'EditContent',
+    props: true,
+    component: () => import('../views/EditContent.vue')
+  },
 ]
 
 const router = new VueRouter({

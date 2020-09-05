@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 mt-5">
         <div class="content">
-          <h1>Add Content</h1>
+          <h1>Edit Content</h1>
 
           <loader v-if="loading == true"></loader>
           <error v-if="error == true" :text="errorText"></error>
@@ -47,11 +47,26 @@ export default {
         date: null,
       },
       content: null,
-      loading: false,
+      loading: true,
       submitLoading: false,
       error: false,
       errorText: "An error has occured, please try again.",
     };
+  },
+  mounted() {
+    axios
+      .get(process.env.VUE_APP_API_ROOT + "/content/" + this.id + "/")
+      .then((response) => {
+        this.form = response.data;
+        this.loading = false;
+      })
+      .catch((error) => {
+        this.loading = false;
+        this.error = true;
+        if (error.response.status == 404) {
+          this.errorText = "This article does not exist.";
+        }
+      });
   },
   methods: {
     submitForm: function () {
@@ -62,14 +77,14 @@ export default {
         },
       };
       axios
-        .post(
-          process.env.VUE_APP_API_ROOT + "/content/",
+        .put(
+          process.env.VUE_APP_API_ROOT + "/content/" + this.form.id + "/",
           this.form,
           config
         )
         .then(() => {
-          toastr.success("The article was successfully added.");
-          this.$router.push("/");
+          toastr.success("The article was successfully updated.");
+          this.$router.push("/content/" + this.form.id);
         })
         .catch((error) => {
           console.log(error);
