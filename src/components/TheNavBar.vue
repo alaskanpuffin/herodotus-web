@@ -15,7 +15,7 @@
       <a v-if="$store.state.userAuthenticated == true">
         <i class="fa fa-users-cog"></i>
         <div class="dropdown">
-          <a>Settings</a>
+          <router-link to="/settings/general">Settings</router-link>
           <a @click="logoutUser">Logout</a>
         </div>
       </a>
@@ -36,13 +36,13 @@ export default {
     logoutUser: function () {
       var config = {
         headers: {
-          'Authorization': 'Token ' + this.$cookies.get('token')
+          Authorization: "Token " + this.$cookies.get("token"),
         },
       };
       axios
         .post(process.env.VUE_APP_API_ROOT + "/api/auth/logout/", {}, config)
         .then(() => {
-          this.$cookies.remove('token');
+          this.$cookies.remove("token");
           this.$store.state.userAuthenticated = false;
           toastr.success("You have been logged out.");
         })
@@ -51,9 +51,31 @@ export default {
           toastr.error("An error has occured.");
         })
         .then(() => {
-          this.$router.push('/');
-        })
+          this.$router.push("/");
+        });
     },
+  },
+  mounted() {
+    if (this.$store.state.userAuthenticated == true) {
+      var config = {
+        headers: {
+          Authorization: "Token " + this.$cookies.get("token"),
+        },
+      };
+
+      axios
+        .options(process.env.VUE_APP_API_ROOT + "/checktoken/", config)
+        .catch((error) => {
+          if (error.response.status == 401) {
+            this.$cookies.remove("token");
+            this.$store.state.userAuthenticated = false;
+            this.$router.push("/");
+            toastr.error(
+              "Your authentication token has expired, please login again."
+            );
+          }
+        });
+    }
   },
 };
 </script>
@@ -116,6 +138,7 @@ $nav-background: #fff;
         position: absolute;
         right: 0;
         background-color: $nav-background;
+        z-index: 999;
         a {
           display: block;
           font-size: 20px;

@@ -61,13 +61,16 @@
           rows="5"
           v-model="form.content"
           required
+          v-auto-resize
         ></textarea>
       </div>
       <div class="row">
         <div class="col-12">
           <button>
             <span v-if="submitLoading == false">Submit</span>
-            <span v-if="submitLoading == true"><i class="fa fa-spinner fa-pulse"></i></span>
+            <span v-if="submitLoading == true">
+              <i class="fa fa-spinner fa-pulse"></i>
+            </span>
           </button>
         </div>
       </div>
@@ -80,6 +83,7 @@ import IMask from "imask";
 import axios from "axios";
 import Pristine from "pristinejs";
 import toastr from "toastr";
+import autosize from 'autosize';
 
 export default {
   props: {
@@ -161,6 +165,9 @@ export default {
       { errorClass: "error" },
       true
     );
+
+    autosize(this.$refs.title)
+    autosize(this.$refs.content)
   },
   watch: {
     "form.date": function () {
@@ -169,12 +176,14 @@ export default {
       }
     },
     "form.title": function () {
-      this.$refs.title.style.height = "auto";
-      this.$refs.title.style.height = this.$refs.title.scrollHeight + "px";
+      this.$nextTick(function () {
+        autosize.update(this.$refs.title)
+      });
     },
     "form.content": function () {
-      this.$refs.content.style.height = "auto";
-      this.$refs.content.style.height = this.$refs.content.scrollHeight + "px";
+      this.$nextTick(function () {
+        autosize.update(this.$refs.content)
+      });
     },
   },
 };

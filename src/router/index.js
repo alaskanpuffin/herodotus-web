@@ -31,6 +31,21 @@ Vue.use(VueRouter)
     props: true,
     component: () => import('../views/EditContent.vue')
   },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () => import('../views/Settings.vue'),
+    children: [
+      {
+        path: 'general',
+        component: () => import('../views/GeneralSettings.vue')
+      },
+      {
+        path: 'users',
+        component: () => import('../views/UserSettings.vue')
+      }
+    ]
+  },
 ]
 
 const router = new VueRouter({

@@ -127,7 +127,7 @@
   height: 100px;
   display: inline-block;
   overflow: hidden;
-  background: #f0f0f0;
+  background: transparent;
   position: absolute;
   left: 50%;
   margin-left: -50px;
