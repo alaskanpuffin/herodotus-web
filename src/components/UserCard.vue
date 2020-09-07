@@ -19,6 +19,9 @@
 <script>
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "UserCard",
@@ -40,7 +43,7 @@ export default {
           };
           axios
             .delete(
-              process.env.VUE_APP_API_ROOT + "/user/" + this.user.id + "/",
+              `${apiRoot}/user/${this.user.id}/`,
               config
             )
             .then(() => {

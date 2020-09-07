@@ -9,6 +9,9 @@
 import UserForm from "@/views/UserForm.vue";
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "AddUser",
@@ -38,7 +41,7 @@ export default {
         },
       };
       axios
-        .post(process.env.VUE_APP_API_ROOT + "/user/", this.form, config)
+        .post(`${apiRoot}/user/`, this.form, config)
         .then(() => {
           toastr.success("The user was successfully created.");
           this.$router.push("/settings/users");

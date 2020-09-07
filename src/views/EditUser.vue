@@ -13,6 +13,9 @@ import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "AddUser",
@@ -48,7 +51,7 @@ export default {
         },
       };
       axios
-        .put(process.env.VUE_APP_API_ROOT + "/user/" + this.id + "/", this.form, config)
+        .put(`${apiRoot}/user/${this.id}/`, this.form, config)
         .then(() => {
           toastr.success("The user was successfully updated.");
           this.$router.push("/settings/users");
@@ -69,7 +72,7 @@ export default {
       },
     };
     axios
-      .get(process.env.VUE_APP_API_ROOT + "/user/" + this.id + "/", config)
+      .get(`${apiRoot}/user/${this.id}/`, config)
       .then((response) => {
         this.form = response.data;
         this.loading = false;

@@ -25,6 +25,9 @@ import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "AddContent",
@@ -63,7 +66,7 @@ export default {
       };
       axios
         .post(
-          process.env.VUE_APP_API_ROOT + "/content/",
+          `${apiRoot}/content/`,
           this.form,
           config
         )

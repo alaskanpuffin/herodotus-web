@@ -25,6 +25,9 @@
 import axios from "axios";
 import Pristine from "pristinejs";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "Login",
@@ -52,7 +55,7 @@ export default {
 
         axios
           .post(
-            process.env.VUE_APP_API_ROOT + "/api/auth/login/",
+            `${apiRoot}/api/auth/login/`,
             this.form,
             config
           )

@@ -16,6 +16,9 @@ import CardContent from "@/components/CardContent.vue";
 import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import axios from "axios";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "Home",
@@ -61,13 +64,12 @@ export default {
     },
   },
   mounted() {
-    this.fetchArticles(process.env.VUE_APP_API_ROOT + "/search/?q=" + this.$route.query.q);
     this.scroll();
   },
   watch: {
     '$store.state.search': function (val) {
       this.content = [];
-      this.fetchArticles(process.env.VUE_APP_API_ROOT + "/search/?q=" + val);
+      this.fetchArticles(`${apiRoot}/search/?q=${val}`);
     },
   }
 };

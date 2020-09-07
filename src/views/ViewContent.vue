@@ -39,6 +39,9 @@ import axios from "axios";
 import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import toastr from "toastr";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "ViewContent",
@@ -60,7 +63,7 @@ export default {
   },
   mounted() {
     axios
-      .get(process.env.VUE_APP_API_ROOT + "/content/" + this.id + "/")
+      .get(`${apiRoot}/content/${this.id}/`)
       .then((response) => {
         this.content = response.data;
         this.loading = false;
@@ -90,7 +93,7 @@ export default {
           };
           axios
             .delete(
-              process.env.VUE_APP_API_ROOT + "/content/" + this.id + "/",
+              `${apiRoot}/content/${this.id}/`,
               config
             )
             .then(() => {

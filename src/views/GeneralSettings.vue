@@ -1,16 +1,28 @@
 <template>
   <div id="content">
     <h1>General Settings</h1>
-    <a id="logoutall" @click="logoutAllSessions">Log Out All Current Sessions</a>
+    <a class="btn" id="indexarticles" @click="indexArticles">
+      <span v-if="indexloading == false">Re-Index MeiliSearch</span>
+      <i v-if="indexloading == true" class="fa fa-spinner fa-pulse"></i>
+    </a>
+    <a class="btn" id="logoutall" @click="logoutAllSessions">Log Out All Current Sessions</a>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from "@/configuration.js";
+
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "GeneralSettings",
+  data: function () {
+    return {
+      indexloading: false,
+    };
+  },
   methods: {
     logoutAllSessions: function () {
       var config = {
@@ -19,7 +31,7 @@ export default {
         },
       };
       axios
-        .post(process.env.VUE_APP_API_ROOT + "/api/auth/logoutall/", {}, config)
+        .post(`${apiRoot}/api/auth/logoutall/`, {}, config)
         .then(() => {
           this.$cookies.remove("token");
           this.$store.state.userAuthenticated = false;
@@ -33,6 +45,30 @@ export default {
           this.$router.push("/");
         });
     },
+    indexArticles: function () {
+      if (this.indexloading == false) {
+        this.indexloading = true;
+        var config = {
+          headers: {
+            Authorization: "Token " + this.$cookies.get("token"),
+          },
+        };
+        axios
+          .get(`${apiRoot}/indexarticles/`, config)
+          .then(() => {
+            toastr.success(
+              "The search index has been updated with all current articles."
+            );
+          })
+          .catch((error) => {
+            console.log(error);
+            toastr.error("An error has occured.");
+          })
+          .then(() => {
+            this.indexloading = false;
+          });
+      }
+    },
   },
 };
 </script>
@@ -44,10 +80,8 @@ export default {
   width: 100%;
   padding: 20px 30px;
   min-height: 300px;
-  #logoutall {
+  .btn {
     width: 100%;
-    border: solid rgb(179, 74, 74) 2px;
-    color: rgb(179, 74, 74);
     cursor: pointer;
     border-radius: 5px;
     padding: 3px 10px;
@@ -57,8 +91,20 @@ export default {
     margin-top: 30px;
     text-align: center;
     transition: 0.3s;
+  }
+  #logoutall {
+    border: solid rgb(179, 74, 74) 2px;
+    color: rgb(179, 74, 74);
     &:hover {
       background-color: rgb(179, 74, 74);
+      color: #fff;
+    }
+  }
+  #indexarticles {
+    border: solid rgb(197, 169, 116) 2px;
+    color: rgb(197, 169, 116);
+    &:hover {
+      background-color: rgb(197, 169, 116);
       color: #fff;
     }
   }

@@ -22,6 +22,9 @@ import axios from "axios";
 import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import UserCard from "@/components/UserCard.vue";
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   name: "UserSettings",
@@ -46,7 +49,7 @@ export default {
     };
 
     axios
-      .get(process.env.VUE_APP_API_ROOT + "/user/", config)
+      .get(`${apiRoot}/user/`, config)
       .then((response) => {
         this.content = response.data;
         this.loading = false;

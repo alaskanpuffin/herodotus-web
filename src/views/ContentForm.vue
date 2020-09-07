@@ -83,6 +83,9 @@ import axios from "axios";
 import Pristine from "pristinejs";
 import toastr from "toastr";
 import autosize from 'autosize';
+import Configuration from '@/configuration.js';
+
+const apiRoot = Configuration.value('apiRoot');
 
 export default {
   props: {
@@ -111,9 +114,7 @@ export default {
         };
         axios
           .get(
-            process.env.VUE_APP_API_ROOT +
-              "/scrapearticle/?url=" +
-              this.form.url,
+            `${apiRoot}/scrapearticle/?url=${this.form.url}`,
             config
           )
           .then((response) => {

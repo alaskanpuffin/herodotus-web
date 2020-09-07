@@ -29,6 +29,9 @@
 <script>
 import axios from "axios";
 import toastr from "toastr";
+import Configuration from "@/configuration.js";
+
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "TheNavBar",
@@ -45,7 +48,7 @@ export default {
         },
       };
       axios
-        .post(process.env.VUE_APP_API_ROOT + "/api/auth/logout/", {}, config)
+        .post(`${apiRoot}/api/auth/logout/`, {}, config)
         .then(() => {
           this.$cookies.remove("token");
           this.$store.state.userAuthenticated = false;
@@ -60,10 +63,12 @@ export default {
         });
     },
     applySearch: function () {
-      this.$store.state.search = this.search;
-      if (this.$route.name != "SearchResults") {
+      if (this.$route.name != "SearchResults" && this.search != "") {
         this.$router.push("/search/");
       }
+      this.$nextTick(() => {
+      this.$store.state.search = this.search;
+      });
     },
   },
   mounted() {
@@ -74,18 +79,16 @@ export default {
         },
       };
 
-      axios
-        .options(process.env.VUE_APP_API_ROOT + "/checktoken/", config)
-        .catch((error) => {
-          if (error.response.status == 401) {
-            this.$cookies.remove("token");
-            this.$store.state.userAuthenticated = false;
-            this.$router.push("/");
-            toastr.error(
-              "Your authentication token has expired, please login again."
-            );
-          }
-        });
+      axios.options(`${apiRoot}/checktoken/`, config).catch((error) => {
+        if (error.response.status == 401) {
+          this.$cookies.remove("token");
+          this.$store.state.userAuthenticated = false;
+          this.$router.push("/");
+          toastr.error(
+            "Your authentication token has expired, please login again."
+          );
+        }
+      });
     }
   },
 };
