@@ -10,6 +10,11 @@ Vue.use(VueRouter)
     component: () => import('../views/Home.vue')
   },
   {
+    path: '/search',
+    name: 'SearchResults',
+    component: () => import('../views/SearchResults.vue')
+  },
+  {
     path: '/add',
     name: 'AddContent',
     component: () => import('../views/AddContent.vue')
@@ -43,6 +48,15 @@ Vue.use(VueRouter)
       {
         path: 'users',
         component: () => import('../views/UserSettings.vue')
+      },
+      {
+        path: 'user/add/',
+        component: () => import('../views/AddUser.vue')
+      },
+      {
+        path: 'user/:id/',
+        props: true,
+        component: () => import('../views/EditUser.vue')
       }
     ]
   },

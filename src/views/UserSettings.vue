@@ -1,10 +1,19 @@
 <template>
   <div id="content">
     <loader v-if="loading == true"></loader>
+    <h1 class="mb-3">Manage Users</h1>
+
     <error v-if="error == true" :text="errorText"></error>
 
-    <h1 class="mb-3">Manage Users</h1>
-    <user-card v-for="(user, index) in content" v-on:remove="content.splice(index, 1)" :user="user" :key="user.id"></user-card>
+    <router-link to="/settings/user/add" id="adduser" v-if="loading == false && error == false">
+      <i class="fa fa-plus"></i> Add
+    </router-link>
+    <user-card
+      v-for="(user, index) in content"
+      v-on:remove="content.splice(index, 1)"
+      :user="user"
+      :key="user.id"
+    ></user-card>
   </div>
 </template>
 
@@ -19,13 +28,14 @@ export default {
   components: {
     Loader,
     Error,
-    UserCard
+    UserCard,
   },
   data: function () {
     return {
       content: null,
       loading: true,
       error: false,
+      errorText: 'An error has occured, please try again.'
     };
   },
   mounted() {
@@ -39,12 +49,14 @@ export default {
       .get(process.env.VUE_APP_API_ROOT + "/user/", config)
       .then((response) => {
         this.content = response.data;
-        console.log(response.data);
         this.loading = false;
       })
-      .catch(() => {
+      .catch((error) => {
         this.loading = false;
         this.error = true;
+        if (error.response.status == 403) {
+          this.errorText = "You do not have permission to manage users.";
+        }
       });
   },
 };
@@ -57,6 +69,7 @@ export default {
   width: 100%;
   padding: 20px 30px;
   min-height: 300px;
+  position: relative;
   #logoutall {
     width: 100%;
     border: solid rgb(179, 74, 74) 2px;
@@ -74,6 +87,24 @@ export default {
       background-color: rgb(179, 74, 74);
       color: #fff;
     }
+  }
+  #adduser {
+    position: absolute;
+    padding: 3px 10px;
+    font-weight: bold;
+    text-decoration: none;
+    top: 20px;
+    right: 30px;
+    display: block;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    color: #FFF;
+    background-color: #95958c;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgb(240, 240, 240);
+    cursor: pointer;
   }
 }
 </style>

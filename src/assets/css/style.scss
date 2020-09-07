@@ -26,17 +26,20 @@ html {
     font-family: "Barlow", sans-serif;
 }
 
-
 input:focus,
-textarea:focus, select:focus, button:focus {
-  outline: none;
+textarea:focus,
+select:focus,
+button:focus {
+    outline: none;
 }
 label {
     margin: 10px 0;
     display: block;
     font-size-adjust: 15px;
 }
-input[type="text"], input[type="password"], select {
+input[type="text"],
+input[type="password"],
+select {
     padding: 10px 15px;
     font-size: 16px;
     border: none;
@@ -49,12 +52,13 @@ input[type="text"], input[type="password"], select {
     box-shadow: 0 1px 2px rgb(240, 240, 240) inset;
     border: solid rgb(224, 224, 224) 1px;
 }
-input[type="submit"], button {
+input[type="submit"],
+button {
     padding: 10px 15px;
     font-size: 16px;
     border: none;
     border-radius: 0;
-    color: #FFF;
+    color: #fff;
     background-color: #95958c;
     border-radius: 5px;
     width: 100px;
@@ -72,3 +76,22 @@ input[type="submit"], button {
 .form-group {
     margin-bottom: 20px;
 }
+
+// For Future Use
+// #markdown-wrapper {
+//     pre {
+//         background-color: rgb(238, 238, 238);
+//         border-radius: 5px;
+//         padding: 10px 20px;
+//         box-sizing: border-box;
+//         overflow-x: scroll;
+//         code {
+//             font-family: monospace !important;
+//         }
+//     }
+//     code {
+//         background-color: rgb(238, 238, 238);
+//         border-radius: 5px;
+//         padding: 0 5px;
+//     }
+// }

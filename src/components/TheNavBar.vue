@@ -6,7 +6,7 @@
       </router-link>
     </div>
     <div class="search">
-      <input type="text" placeholder="Search" />
+      <input type="text" v-debounce:300ms="applySearch" v-model="search" placeholder="Search" />
     </div>
     <div class="links">
       <router-link to="/add" v-if="$store.state.userAuthenticated == true">
@@ -32,6 +32,11 @@ import toastr from "toastr";
 
 export default {
   name: "TheNavBar",
+  data: function () {
+    return {
+      search: "",
+    };
+  },
   methods: {
     logoutUser: function () {
       var config = {
@@ -53,6 +58,12 @@ export default {
         .then(() => {
           this.$router.push("/");
         });
+    },
+    applySearch: function () {
+      this.$store.state.search = this.search;
+      if (this.$route.name != "SearchResults") {
+        this.$router.push("/search/");
+      }
     },
   },
   mounted() {

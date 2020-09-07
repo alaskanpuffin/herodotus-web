@@ -1,7 +1,6 @@
 <template>
   <div class="container mt-5 mb-5">
     <div class="row">
-      <loader v-if="loading == true"></loader>
       <error v-if="error == true" :text="errorText"></error>
       <div v-if="content != null" class="col-12" id="content">
         <div id="toolbar">
@@ -20,12 +19,18 @@
               <i class="fa fa-spinner fa-pulse"></i>
             </span>
           </a>
+          <a id="link-btn" v-if="content.url" target="_blank" :href="content.url">
+            <i class="fa fa-link"></i> Original Link
+          </a>
         </div>
+        <p id="date">{{ content.date }}</p>
         <h1>{{ content.title }}</h1>
+        <p id="author" v-if="content.author">By: {{ content.author }}</p>
         <div class="divider"></div>
         <p v-for="(line, index) in splitContent" :key="index">{{ line }}</p>
       </div>
     </div>
+    <loader v-if="loading == true"></loader>
   </div>
 </template>
 
@@ -159,6 +164,10 @@ export default {
     }
     #delete-btn {
       background-color: rgb(189, 105, 105);
+    }
+    #link-btn {
+      background-color: rgb(216, 167, 77);
+      width: 150px;
     }
   }
 }

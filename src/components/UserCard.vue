@@ -1,8 +1,8 @@
 <template>
   <div id="user-card">
     <div id="name-block">
-      <h2>{{ user.first_name }} {{ user.last_name }}</h2>
-      <p>{{ user.username }}</p>
+      <h2>{{ user.username }}</h2>
+      <p>{{ user.first_name }} {{ user.last_name }}</p>
     </div>
     <div id="actions">
       <router-link :to="'/settings/user/' + user.id">

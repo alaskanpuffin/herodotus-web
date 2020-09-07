@@ -11,7 +11,7 @@
           <content-form
             :form="form"
             :submitLoading="submitLoading"
-            v-if="loading == false"
+            v-if="loading == false && error == false"
           ></content-form>
         </div>
       </div>

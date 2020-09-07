@@ -8,6 +8,7 @@ Vue.use(VueCookies)
 export default new Vuex.Store({
   state: {
     userAuthenticated: Vue.$cookies.isKey('token'),
+    search: '',
   },
   mutations: {
   },

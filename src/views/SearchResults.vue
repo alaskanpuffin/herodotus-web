@@ -2,15 +2,11 @@
   <div id="home">
     <error v-if="error == true" :text="'An error has occured, please try again.'"></error>
     <div class="container">
-      <div class="row">
-        <div class="col-12 mt-4">
-          <h1>Latest Articles</h1>
-        </div>
-      </div>
-      <div class="row mt-4">
+      <div class="row mt-5">
         <card-content v-for="card in content" :card="card" :key="card.id" />
       </div>
     </div>
+    <error v-if="content.length < 1" :text="'No results found.'"></error>
     <loader v-if="loading == true"></loader>
   </div>
 </template>
@@ -42,8 +38,7 @@ export default {
         if (
           window.innerHeight + window.scrollY >=
             document.body.scrollHeight - 100 &&
-          this.loading == false &&
-          this.nextPageUrl != null
+          this.loading == false && this.nextPageUrl != null
         ) {
           this.fetchArticles(this.nextPageUrl);
         }
@@ -55,7 +50,7 @@ export default {
         .get(url)
         .then((response) => {
           this.content = this.content.concat(response.data.results);
-          this.nextPageUrl = response.data.next;
+          this.nextPageUrl = response.data.next
           this.loading = false;
         })
         .catch((error) => {
@@ -66,8 +61,14 @@ export default {
     },
   },
   mounted() {
-    this.fetchArticles(process.env.VUE_APP_API_ROOT + "/content/");
+    this.fetchArticles(process.env.VUE_APP_API_ROOT + "/search/?q=" + this.$route.query.q);
     this.scroll();
   },
+  watch: {
+    '$store.state.search': function (val) {
+      this.content = [];
+      this.fetchArticles(process.env.VUE_APP_API_ROOT + "/search/?q=" + val);
+    },
+  }
 };
 </script>

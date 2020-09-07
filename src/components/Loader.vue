@@ -125,12 +125,10 @@
 .loadingio-spinner-spin-pudxjoamwkl {
   width: 100px;
   height: 100px;
-  display: inline-block;
+  display: block;
   overflow: hidden;
   background: transparent;
-  position: absolute;
-  left: 50%;
-  margin-left: -50px;
+  margin: 30px auto;
   top: 100px;
 }
 .ldio-cxl3plwez26 {

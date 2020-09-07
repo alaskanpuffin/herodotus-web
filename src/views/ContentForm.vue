@@ -61,7 +61,6 @@
           rows="5"
           v-model="form.content"
           required
-          v-auto-resize
         ></textarea>
       </div>
       <div class="row">
