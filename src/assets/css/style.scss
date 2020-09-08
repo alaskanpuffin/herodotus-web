@@ -26,6 +26,11 @@ html {
     font-family: "Barlow", sans-serif;
 }
 
+input, button, {
+    -webkit-border-radius:0; 
+    border-radius:0;
+}
+
 input:focus,
 textarea:focus,
 select:focus,

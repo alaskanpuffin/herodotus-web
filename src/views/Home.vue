@@ -3,10 +3,11 @@
     <div class="container">
       <div class="row">
         <div class="col-12 mt-4">
-          <h1>Latest Articles</h1>
+          <h1>Latest</h1>
         </div>
       </div>
       <error v-if="error == true" :text="'An error has occured, please try again.'"></error>
+      <error v-if="content.length < 1 && loading == false" :text="'No results found.'"></error>
       <div class="row mt-4">
         <card-content v-for="card in content" :card="card" :key="card.id" />
       </div>
@@ -20,9 +21,9 @@ import CardContent from "@/components/CardContent.vue";
 import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import axios from "axios";
-import Configuration from '@/configuration.js';
+import Configuration from "@/configuration.js";
 
-const apiRoot = Configuration.value('apiRoot');
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "Home",

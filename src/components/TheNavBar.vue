@@ -12,7 +12,7 @@
       <router-link to="/add" v-if="$store.state.userAuthenticated == true">
         <i class="fa fa-plus"></i>
       </router-link>
-      <a v-if="$store.state.userAuthenticated == true">
+      <a v-if="$store.state.userAuthenticated == true" onclick="void(0)">
         <i class="fa fa-users-cog"></i>
         <div class="dropdown">
           <router-link to="/settings/general">Settings</router-link>
@@ -67,7 +67,7 @@ export default {
         this.$router.push("/search/");
       }
       this.$nextTick(() => {
-      this.$store.state.search = this.search;
+        this.$store.state.search = this.search;
       });
     },
   },

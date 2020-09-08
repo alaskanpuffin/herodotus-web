@@ -6,7 +6,7 @@
         <card-content v-for="card in content" :card="card" :key="card.id" />
       </div>
     </div>
-    <error v-if="content.length < 1" :text="'No results found.'"></error>
+    <error v-if="content.length < 1 && loading == false" :text="'No results found.'"></error>
     <loader v-if="loading == true"></loader>
   </div>
 </template>
@@ -65,6 +65,7 @@ export default {
   },
   mounted() {
     this.scroll();
+    this.fetchArticles(`${apiRoot}/search/?q=${this.$store.state.search}`);
   },
   watch: {
     '$store.state.search': function (val) {
