@@ -48,6 +48,7 @@ export default {
         url: "",
         author: "",
         date: null,
+        richtext: false,
       },
       content: null,
       loading: true,
@@ -61,6 +62,7 @@ export default {
       .get(`${apiRoot}/content/${this.id}/`)
       .then((response) => {
         this.form = response.data;
+        console.log(response.data);
         this.loading = false;
       })
       .catch((error) => {

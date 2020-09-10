@@ -27,7 +27,10 @@
         <h1>{{ content.title }}</h1>
         <p id="author" v-if="content.author">By: {{ content.author }}</p>
         <div class="divider"></div>
-        <p v-for="(line, index) in splitContent" :key="index">{{ line }}</p>
+        <div class="article" v-if="content.html == null">
+          <p v-for="(line, index) in splitContent" :key="index">{{ line }}</p>
+        </div>
+        <div class="article" v-html="content.html" id="markdown-wrapper"></div>
       </div>
     </div>
     <loader v-if="loading == true"></loader>
@@ -39,9 +42,10 @@ import axios from "axios";
 import Loader from "@/components/Loader.vue";
 import Error from "@/components/Error.vue";
 import toastr from "toastr";
-import Configuration from '@/configuration.js';
+import Configuration from "@/configuration.js";
+import showdown from "showdown";
 
-const apiRoot = Configuration.value('apiRoot');
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "ViewContent",
@@ -62,10 +66,15 @@ export default {
     };
   },
   mounted() {
+    var converter = new showdown.Converter({tables: true, emoji: true});
+
     axios
       .get(`${apiRoot}/content/${this.id}/`)
       .then((response) => {
         this.content = response.data;
+        if (this.content.richtext == true) {
+          this.content.html = converter.makeHtml(this.content.content);
+        }
         this.loading = false;
       })
       .catch((error) => {
@@ -92,10 +101,7 @@ export default {
             },
           };
           axios
-            .delete(
-              `${apiRoot}/content/${this.id}/`,
-              config
-            )
+            .delete(`${apiRoot}/content/${this.id}/`, config)
             .then(() => {
               toastr.success("The article was successfully deleted.");
               this.$router.push("/");
@@ -121,7 +127,7 @@ export default {
   width: 100%;
   padding: 50px 80px;
   h1 {
-    font-size: 25px;
+    font-size: 34px;
   }
   .divider {
     width: 100px;

@@ -48,6 +48,7 @@ export default {
         url: "",
         author: "",
         date: null,
+        richtext: false,
       },
       content: null,
       loading: false,

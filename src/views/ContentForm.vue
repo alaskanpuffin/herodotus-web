@@ -43,6 +43,14 @@
     </div>
     <div class="form-wrapper article-form-wrapper">
       <div class="form-group">
+        <div id="markdown-toggle">
+          <label class="switch">
+            <input v-model="form.richtext" type="checkbox" />
+            <span class="slider round"></span>
+          </label>
+          <p v-if="form.richtext == false">Plain-Text Mode</p>
+          <p v-if="form.richtext == true">Markdown Mode</p>
+        </div>
         <textarea
           id="title"
           ref="title"
@@ -82,10 +90,10 @@ import IMask from "imask";
 import axios from "axios";
 import Pristine from "pristinejs";
 import toastr from "toastr";
-import autosize from 'autosize';
-import Configuration from '@/configuration.js';
+import autosize from "autosize";
+import Configuration from "@/configuration.js";
 
-const apiRoot = Configuration.value('apiRoot');
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   props: {
@@ -113,10 +121,7 @@ export default {
           },
         };
         axios
-          .get(
-            `${apiRoot}/scrapearticle/?url=${this.form.url}`,
-            config
-          )
+          .get(`${apiRoot}/scrapearticle/?url=${this.form.url}`, config)
           .then((response) => {
             this.$set(this.form, "content", response.data.content);
             console.log(this.$refs.content.scrollHeight);
@@ -166,8 +171,8 @@ export default {
       true
     );
 
-    autosize(this.$refs.title)
-    autosize(this.$refs.content)
+    autosize(this.$refs.title);
+    autosize(this.$refs.content);
   },
   watch: {
     "form.date": function () {
@@ -177,12 +182,12 @@ export default {
     },
     "form.title": function () {
       this.$nextTick(function () {
-        autosize.update(this.$refs.title)
+        autosize.update(this.$refs.title);
       });
     },
     "form.content": function () {
       this.$nextTick(function () {
-        autosize.update(this.$refs.content)
+        autosize.update(this.$refs.content);
       });
     },
   },
@@ -192,6 +197,19 @@ export default {
 <style lang="scss" scoped>
 .content {
   margin: 10px inherit;
+}
+#markdown-toggle {
+  width: 230px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  background-color: rgb(241, 241, 241);
+  p {
+    padding-left: 15px;
+    font-weight: bold;
+    display: inline-block;
+    color: rgb(80, 80, 80);
+  }
 }
 #scrape-article {
   position: absolute;
