@@ -1,10 +1,8 @@
 <template>
-  <div class="col-md-6">
-    <div class="card" @click="$router.push('/content/' + card.id)">
-      <h2>{{ card.title }}</h2>
-      <p>{{ card.content }}</p>
-      <div class="cover"></div>
-    </div>
+  <div class="card" @click="$router.push('/content/' + card.id)">
+    <h2>{{ card.title }}</h2>
+    <p>{{ card.content }}</p>
+    <div class="cover"></div>
   </div>
 </template>
 
@@ -21,9 +19,9 @@ export default {
 .card {
   background-color: #fff;
   box-shadow: 0 1px 3px rgb(201, 201, 201);
-  width: 100%;
+  width: 46%;
+  margin: 1%;
   padding: 20px 30px;
-  margin-bottom: 25px;
   position: relative;
   cursor: pointer;
   h2 {

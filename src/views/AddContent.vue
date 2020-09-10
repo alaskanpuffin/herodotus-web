@@ -73,7 +73,13 @@ export default {
         )
         .then(() => {
           toastr.success("The article was successfully added.");
-          this.$router.push("/");
+          this.form.content_type = "article";
+          this.form.title = "";
+          this.form.content = "";
+          this.form.url = "";
+          this.form.author = "";
+          this.form.date = null;
+          this.form.richtext = false;
         })
         .catch((error) => {
           console.log(error);

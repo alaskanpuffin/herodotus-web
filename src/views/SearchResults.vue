@@ -1,13 +1,18 @@
 <template>
   <div id="home">
-    <error v-if="error == true" :text="'An error has occured, please try again.'"></error>
     <div class="container">
-      <div class="row mt-5">
-        <card-content v-for="card in content" :card="card" :key="card.id" />
+      <div class="row" v-if="loading == false && error == false && content.length >= 1">
+        <div class="col-12 mt-4">
+          <h1 style="margin: 1%;">Search Results For "{{ $store.state.search }}"</h1>
+        </div>
+      </div>
+      <div v-masonry="searchResultsPage" item-selector=".card" transition-duration="0">
+        <card-content v-masonry-tile v-for="card in content" :card="card" :key="card.id" />
       </div>
     </div>
     <error v-if="content.length < 1 && loading == false" :text="'No results found.'"></error>
     <loader v-if="loading == true"></loader>
+    <error v-if="error == true" :text="'An error has occured, please try again.'"></error>
   </div>
 </template>
 

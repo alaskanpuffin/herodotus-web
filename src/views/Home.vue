@@ -3,18 +3,23 @@
     <div class="container">
       <div class="row">
         <div class="col-12 mt-4">
-          <h1>Latest</h1>
+          <h1 style="margin: 1%;">Latest</h1>
         </div>
       </div>
       <error v-if="error == true" :text="'An error has occured, please try again.'"></error>
       <error v-if="content.length < 1 && loading == false" :text="'No results found.'"></error>
-      <div class="row mt-4">
-        <card-content v-for="card in content" :card="card" :key="card.id" />
+      <div v-masonry="homePage" item-selector=".card" transition-duration="0">
+        <card-content v-masonry-tile v-for="card in content" :card="card" :key="card.id" />
       </div>
     </div>
     <loader v-if="loading == true"></loader>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.grid-wrapper {
+}
+</style>
 
 <script>
 import CardContent from "@/components/CardContent.vue";
@@ -38,6 +43,7 @@ export default {
       loading: true,
       error: false,
       nextPageUrl: null,
+      masonry: null,
     };
   },
   methods: {
