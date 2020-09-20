@@ -16,11 +16,6 @@
   </div>
 </template>
 
-<style lang="scss" scoped>
-.grid-wrapper {
-}
-</style>
-
 <script>
 import CardContent from "@/components/CardContent.vue";
 import Loader from "@/components/Loader.vue";
@@ -44,6 +39,7 @@ export default {
       error: false,
       nextPageUrl: null,
       masonry: null,
+      homePage: null,
     };
   },
   methods: {
