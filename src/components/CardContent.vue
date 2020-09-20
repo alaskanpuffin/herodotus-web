@@ -1,5 +1,6 @@
 <template>
   <div class="card" @click="$router.push('/content/' + card.id)">
+    <span>{{ card.date }}</span>
     <h2>{{ card.title }}</h2>
     <p>{{ card.content }}</p>
     <div class="cover"></div>

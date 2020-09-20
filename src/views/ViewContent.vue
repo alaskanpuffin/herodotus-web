@@ -25,7 +25,8 @@
         </div>
         <p id="date">{{ content.date }}</p>
         <h1>{{ content.title }}</h1>
-        <p id="author" v-if="content.author">By: {{ content.author }}</p>
+        <br>
+        <p id="author"><span v-if="content.author">By: {{ content.author }}</span> <span v-if="content.publisher != '' && content.author != ''" style="margin: 0 5px;">//</span> <i>{{ content.publisher }}</i></p>
         <div class="divider"></div>
         <div class="article" v-if="content.html == null">
           <p v-for="(line, index) in splitContent" :key="index">{{ line }}</p>

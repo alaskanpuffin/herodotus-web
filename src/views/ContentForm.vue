@@ -27,6 +27,10 @@
           <input type="text" id="author" v-model="form.author" autocomplete="off" />
         </div>
         <div class="col-6 form-group">
+          <label for="publisher">Publisher / Website Name</label>
+          <input type="text" id="publisher" v-model="form.publisher" autocomplete="off" />
+        </div>
+        <div class="col-6 form-group">
           <label for="date">Date</label>
           <input
             type="text"

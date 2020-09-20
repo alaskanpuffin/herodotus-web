@@ -60,6 +60,11 @@ Vue.use(VueRouter)
       }
     ]
   },
+  {
+    path: '/feeds',
+    name: 'Feeds',
+    component: () => import('../views/ManageFeeds.vue'),
+  },
 ]
 
 const router = new VueRouter({

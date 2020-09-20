@@ -12,6 +12,9 @@
       <router-link to="/add" v-if="$store.state.userAuthenticated == true">
         <i class="fa fa-plus"></i>
       </router-link>
+      <router-link to="/feeds" v-if="$store.state.userAuthenticated == true">
+        <i class="fa fa-rss"></i>
+      </router-link>
       <a v-if="$store.state.userAuthenticated == true" onclick="void(0)">
         <i class="fa fa-users-cog"></i>
         <div class="dropdown">
