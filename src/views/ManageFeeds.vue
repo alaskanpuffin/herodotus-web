@@ -98,6 +98,7 @@ export default {
     axios
       .get(`${apiRoot}/feed/`)
       .then((response) => {
+        console.log(response.data);
         this.content = response.data;
         this.loading = false;
       })
@@ -121,12 +122,12 @@ export default {
         axios
           .post(`${apiRoot}/feed/`, this.form, config)
           .then((response) => {
-            console.log(response);
             toastr.success("The feed was successfully added.");
             this.content.unshift({
               id: response.data.id,
               title: this.form.title,
               url: this.form.url,
+              last_updated: null,
             });
             this.form.title = "";
             this.form.url = "";

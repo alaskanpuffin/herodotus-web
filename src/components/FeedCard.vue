@@ -2,7 +2,11 @@
   <div id="feed-card">
     <div id="name-block">
       <h2>{{ feed.title }}</h2>
-      <p>{{ feed.url }}</p>
+      <p>
+        {{ feed.url }} - Last Pulled:
+        <span v-if="formattedDate">{{ formattedDate }}</span>
+        <span v-else>Never</span>
+      </p>
     </div>
     <div id="actions">
       <a id="delete-feed" @click="deleteFeed">
@@ -16,9 +20,9 @@
 <script>
 import axios from "axios";
 import toastr from "toastr";
-import Configuration from '@/configuration.js';
+import Configuration from "@/configuration.js";
 
-const apiRoot = Configuration.value('apiRoot');
+const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "FeedCard",
@@ -39,13 +43,10 @@ export default {
             },
           };
           axios
-            .delete(
-              `${apiRoot}/feed/${this.feed.id}/`,
-              config
-            )
+            .delete(`${apiRoot}/feed/${this.feed.id}/`, config)
             .then(() => {
               toastr.success("The feed was successfully deleted.");
-              this.$emit('remove');
+              this.$emit("remove");
             })
             .catch((error) => {
               console.log(error);
@@ -55,6 +56,21 @@ export default {
               this.loading = false;
             });
         }
+      }
+    },
+  },
+  computed: {
+    formattedDate: function () {
+      if (this.feed.last_updated !== null) {
+        var date = new Date(this.feed.last_updated);
+        var M = date.getMonth();
+        var d = date.getDate();
+        var Y = date.getFullYear();
+        var h = date.getHours();
+        var m = date.getMinutes();
+        return `${M}/${d}/${Y} ${h}:${m}`;
+      } else {
+        return null;
       }
     },
   },
@@ -68,7 +84,7 @@ export default {
   box-shadow: 0 1px 3px rgb(204, 204, 204);
   padding: 10px 20px;
   margin-top: 15px;
-  background-color: #FFF;
+  background-color: #fff;
   position: relative;
   #actions {
     height: 70px;

@@ -1,6 +1,10 @@
 <template>
   <div class="card" @click="$router.push('/content/' + card.id)">
-    <span>{{ card.date }}</span>
+    <span>
+      {{ card.date }}
+      <span v-if="card.publisher"> &#8226; {{ card.publisher }}</span>
+      <span v-if="card.author"> &#8226; By: {{ card.author }}</span>
+    </span>
     <h2>{{ card.title }}</h2>
     <p>{{ card.content }}</p>
     <div class="cover"></div>
