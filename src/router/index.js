@@ -65,6 +65,11 @@ Vue.use(VueRouter)
     name: 'Feeds',
     component: () => import('../views/ManageFeeds.vue'),
   },
+  {
+    path: '/batch',
+    name: 'BatchAdd',
+    component: () => import('../views/BatchAdd.vue'),
+  },
 ]
 
 const router = new VueRouter({
