@@ -122,11 +122,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
+
 #content {
   background-color: #fff;
   box-shadow: 0 1px 3px rgb(201, 201, 201);
   width: 100%;
   padding: 50px 80px;
+  box-sizing: border-box;
   h1 {
     font-size: 34px;
   }
@@ -180,5 +185,12 @@ export default {
       width: 150px;
     }
   }
+}
+
+@include media-breakpoint-down(sm) {
+#content {
+  padding: 10px;
+  word-wrap: break-word;
+}
 }
 </style>

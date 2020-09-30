@@ -6,7 +6,12 @@
       </router-link>
     </div>
     <div class="search">
-      <input type="text" v-debounce:300ms="applySearch" v-model="search" placeholder="Search" />
+      <input
+        type="text"
+        v-debounce:300ms="applySearch"
+        v-model="search"
+        placeholder="Search"
+      />
     </div>
     <div class="links">
       <router-link to="/add" v-if="$store.state.userAuthenticated == true">
@@ -96,11 +101,19 @@ export default {
         }
       });
     }
+    (function (l) {
+      var i,
+        s = { touchend: function () {} };
+      for (i in s) l.addEventListener(i, s);
+    })(document);
   },
 };
 </script>
 
 <style lang="scss" scoped>
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
 $nav-background: #fff;
 
 .nav {
@@ -120,7 +133,7 @@ $nav-background: #fff;
   }
   .search {
     width: calc(70% - 280px);
-    min-width: 300px;
+    min-width: 280px;
     input {
       width: 100%;
       background-color: darken($nav-background, 5);
@@ -158,6 +171,7 @@ $nav-background: #fff;
         position: absolute;
         right: 0;
         background-color: $nav-background;
+        box-shadow: 0 0 3px rgb(190, 190, 190);
         z-index: 999;
         a {
           display: block;
@@ -168,6 +182,36 @@ $nav-background: #fff;
       }
       &:hover .dropdown {
         display: block;
+      }
+    }
+  }
+}
+@include media-breakpoint-down(sm) {
+  .nav {
+    height: 140px;
+    .logo {
+      text-align: center;
+      width: 100%;
+    }
+    .search {
+      float: none;
+      width: 90%;
+      margin: 0 5%;
+    }
+    .links {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999999;
+      float: none;
+      text-align: center;
+      background-color: $nav-background;
+      box-shadow: 0 0 10px rgb(190, 190, 190);
+      a {
+        & .dropdown {
+          bottom: 70px;
+        }
       }
     }
   }

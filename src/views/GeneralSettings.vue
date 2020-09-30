@@ -5,7 +5,15 @@
       <span v-if="indexloading == false">Re-Index MeiliSearch</span>
       <i v-if="indexloading == true" class="fa fa-spinner fa-pulse"></i>
     </a>
-    <a class="btn" id="logoutall" @click="logoutAllSessions">Log Out All Current Sessions</a>
+    <a class="btn" id="logoutall" @click="logoutAllSessions"
+      >Log Out All Current Sessions</a
+    >
+
+    <p id="version">
+      Frontend Version: {{ $store.state.version }} - Backend Version:
+      <span v-if="versionLoading == false">{{ backendVersion }}</span
+      ><i v-else class="fa fa-spinner fa-pulse"></i>
+    </p>
   </div>
 </template>
 
@@ -21,7 +29,22 @@ export default {
   data: function () {
     return {
       indexloading: false,
+      versionLoading: true,
+      backendVersion: "",
     };
+  },
+  mounted() {
+    axios
+      .get(`${apiRoot}/version/`)
+      .then((response) => {
+        this.backendVersion = response.data.version;
+      })
+      .catch(() => {
+        this.backendVersion = "error";
+      })
+      .then(() => {
+        this.versionLoading = false;
+      });
   },
   methods: {
     logoutAllSessions: function () {
@@ -80,6 +103,14 @@ export default {
   width: 100%;
   padding: 20px 30px;
   min-height: 300px;
+  position: relative;
+  #version {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+  }
   .btn {
     width: 100%;
     cursor: pointer;

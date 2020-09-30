@@ -21,6 +21,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import "~bootstrap/scss/mixins/_breakpoints";
 .card {
   background-color: #fff;
   box-shadow: 0 1px 3px rgb(201, 201, 201);
@@ -51,6 +54,12 @@ export default {
   }
   span {
     color: rgb(139, 139, 139);
+  }
+}
+@include media-breakpoint-down(sm) {
+  .card {
+    width: 98%;
+    margin: 1%;
   }
 }
 </style>
