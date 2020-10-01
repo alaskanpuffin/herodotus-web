@@ -79,6 +79,7 @@ export default {
           this.form.content = "";
           this.form.url = "";
           this.form.author = "";
+          this.form.publisher = "";
           this.form.date = null;
           this.form.richtext = false;
         })
