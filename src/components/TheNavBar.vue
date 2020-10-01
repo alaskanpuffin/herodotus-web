@@ -111,11 +111,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
-@import "~bootstrap/scss/mixins/_breakpoints";
-$nav-background: #fff;
-
 .nav {
   width: 100%;
   height: 70px;

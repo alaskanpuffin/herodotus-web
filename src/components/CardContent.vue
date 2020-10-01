@@ -21,9 +21,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
-@import "~bootstrap/scss/mixins/_breakpoints";
 .card {
   background-color: #fff;
   box-shadow: 0 1px 3px rgb(201, 201, 201);

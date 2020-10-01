@@ -90,4 +90,9 @@ export default {
 .form-group.error textarea {
   border-bottom: solid rgb(224, 94, 94) 3px;
 }
+@include media-breakpoint-down(sm) {
+  .form-wrapper {
+    padding: 20px;
+  }
+}
 </style>

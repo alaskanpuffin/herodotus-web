@@ -9,7 +9,7 @@
             <div id="add-feed">
               <form @submit.prevent="submitForm" novalidate="true" ref="form">
                 <div class="row">
-                  <div class="col-6">
+                  <div class="col-4 col-sm-6">
                     <input
                       type="text"
                       v-model="form.url"
@@ -18,7 +18,7 @@
                       required
                     />
                   </div>
-                  <div class="col-4">
+                  <div class="col-4 col-sm-4">
                     <input
                       type="text"
                       v-model="form.title"
@@ -27,7 +27,7 @@
                       required
                     />
                   </div>
-                  <div class="col-2">
+                  <div class="col-4 col-sm-2">
                     <button>
                       <span v-if="submitLoading == false">Add</span>
                       <span v-if="submitLoading == true">

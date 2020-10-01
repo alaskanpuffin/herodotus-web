@@ -80,12 +80,16 @@ export default {
 <style lang="scss" scoped>
 #feed-card {
   width: 100%;
-  height: 70px;
+  min-height: 70px;
   box-shadow: 0 1px 3px rgb(204, 204, 204);
   padding: 10px 20px;
   margin-top: 15px;
   background-color: #fff;
   position: relative;
+  p {
+    max-width: 80%;
+    word-break: break-word;
+  }
   #actions {
     height: 70px;
     position: absolute;

@@ -16,21 +16,38 @@
           <label for="url">Original URL</label>
           <div class="input-wrapper">
             <input type="text" id="url" v-model="form.url" autocomplete="off" />
-            <a id="scrape-article" v-on:click="scrapeArticle" v-if="form.url != ''">
+            <a
+              id="scrape-article"
+              v-on:click="scrapeArticle"
+              v-if="form.url != ''"
+            >
               <i v-if="this.scrapeLoading == false" class="fa fa-download"></i>
-              <i v-if="this.scrapeLoading == true" class="fa fa-spinner fa-pulse"></i>
+              <i
+                v-if="this.scrapeLoading == true"
+                class="fa fa-spinner fa-pulse"
+              ></i>
             </a>
           </div>
         </div>
-        <div class="col-6 form-group">
+        <div class="col-sm-6 form-group">
           <label for="author">Author</label>
-          <input type="text" id="author" v-model="form.author" autocomplete="off" />
+          <input
+            type="text"
+            id="author"
+            v-model="form.author"
+            autocomplete="off"
+          />
         </div>
-        <div class="col-6 form-group">
+        <div class="col-sm-6 form-group">
           <label for="publisher">Publisher / Website Name</label>
-          <input type="text" id="publisher" v-model="form.publisher" autocomplete="off" />
+          <input
+            type="text"
+            id="publisher"
+            v-model="form.publisher"
+            autocomplete="off"
+          />
         </div>
-        <div class="col-6 form-group">
+        <div class="col-sm-6 form-group">
           <label for="date">Date</label>
           <input
             type="text"
@@ -271,5 +288,10 @@ export default {
 }
 .form-group.error textarea {
   border-bottom: solid rgb(224, 94, 94) 3px;
+}
+@include media-breakpoint-down(sm) {
+  .form-wrapper {
+    padding: 20px;
+  }
 }
 </style>

@@ -9,24 +9,39 @@
             id="edit-btn"
             v-if="$store.state.userAuthenticated == true"
           >
-            <i class="fa fa-pen"></i> Edit
+            <i class="fa fa-pen"></i> <span class="text">Edit</span>
           </router-link>
-          <a id="delete-btn" @click="deleteArticle" v-if="$store.state.userAuthenticated == true">
+          <a
+            id="delete-btn"
+            @click="deleteArticle"
+            v-if="$store.state.userAuthenticated == true"
+          >
             <span v-if="deleteLoading == false">
-              <i class="fa fa-trash"></i> Delete
+              <i class="fa fa-trash"></i> <span class="text">Delete</span>
             </span>
             <span v-if="deleteLoading == true">
               <i class="fa fa-spinner fa-pulse"></i>
             </span>
           </a>
-          <a id="link-btn" v-if="content.url" target="_blank" :href="content.url">
-            <i class="fa fa-link"></i> Original Link
+          <a
+            id="link-btn"
+            v-if="content.url"
+            target="_blank"
+            :href="content.url"
+          >
+            <i class="fa fa-link"></i> <span class="text">Original Link</span>
           </a>
         </div>
         <p id="date">{{ content.date }}</p>
         <h1>{{ content.title }}</h1>
-        <br>
-        <p id="author"><span v-if="content.author">By: {{ content.author }}</span> <span v-if="content.publisher && content.author" style="margin: 0 5px;">//</span> <i>{{ content.publisher }}</i></p>
+        <br />
+        <p id="author">
+          <span v-if="content.author">By: {{ content.author }}</span>
+          <span v-if="content.publisher && content.author" style="margin: 0 5px"
+            >//</span
+          >
+          <i>{{ content.publisher }}</i>
+        </p>
         <div class="divider"></div>
         <div class="article" v-if="content.html == null">
           <p v-for="(line, index) in splitContent" :key="index">{{ line }}</p>
@@ -67,7 +82,7 @@ export default {
     };
   },
   mounted() {
-    var converter = new showdown.Converter({tables: true, emoji: true});
+    var converter = new showdown.Converter({ tables: true, emoji: true });
 
     axios
       .get(`${apiRoot}/content/${this.id}/`)
@@ -122,10 +137,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~bootstrap/scss/_functions";
-@import "~bootstrap/scss/_variables";
-@import "~bootstrap/scss/mixins/_breakpoints";
-
 #content {
   background-color: #fff;
   box-shadow: 0 1px 3px rgb(201, 201, 201);
@@ -188,9 +199,20 @@ export default {
 }
 
 @include media-breakpoint-down(sm) {
-#content {
-  padding: 10px;
-  word-wrap: break-word;
-}
+  #content {
+    padding: 10px 20px;
+    word-wrap: break-word;
+    h1 {
+      font-size: 28px;
+    }
+    #toolbar {
+      a {
+        width: 40px !important;
+        .text {
+          display: none;
+        }
+      }
+    }
+  }
 }
 </style>
