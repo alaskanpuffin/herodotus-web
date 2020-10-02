@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "imask": "^6.0.5",
     "js-cookie": "^2.2.1",
+    "js-file-download": "^0.4.12",
     "pristinejs": "^0.1.9",
     "showdown": "^1.9.1",
     "tinymce": "^5.4.2",
