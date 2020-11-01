@@ -32,6 +32,7 @@
             <i class="fa fa-link"></i> <span class="text">Original Link</span>
           </a>
         </div>
+        <tag-display-card :tags="content.tags" :style="'margin-bottom: 10px;'"></tag-display-card>
         <p id="date">{{ content.date }}</p>
         <h1>{{ content.title }}</h1>
         <br />
@@ -60,6 +61,7 @@ import Error from "@/components/Error.vue";
 import toastr from "toastr";
 import Configuration from "@/configuration.js";
 import showdown from "showdown";
+import TagDisplayCard from "@/components/TagDisplayCard.vue";
 
 const apiRoot = Configuration.value("apiRoot");
 
@@ -68,6 +70,7 @@ export default {
   components: {
     Loader,
     Error,
+    TagDisplayCard,
   },
   props: {
     id: String,

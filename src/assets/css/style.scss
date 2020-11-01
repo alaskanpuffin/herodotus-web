@@ -45,21 +45,29 @@ label {
 }
 input[type="text"],
 input[type="password"],
-select {
+select, .selectize-input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding: 0 15px;
-  font-size: 16px;
+  padding: 0 15px !important;
+  font-size: 16px !important;
   border: none;
-  height: 40px;
+  height: 40px !important;
   line-height: 40px;
-  border-radius: 0;
-  background-color: rgb(250, 250, 250);
-  border-radius: 5px;
+  background-color: rgb(250, 250, 250) !important;
+  border-radius: 5px !important;
   width: 100%;
-  box-shadow: 0 1px 2px rgb(240, 240, 240) inset;
-  border: solid rgb(224, 224, 224) 1px;
+  box-shadow: 0 1px 2px rgb(240, 240, 240) inset !important;
+  border: solid rgb(224, 224, 224) 1px !important;
+}
+.selectize-input {
+  line-height: 20px !important;
+  padding: 6px 10px !important;
+  overflow-y: scroll !important;
+  div {
+    background-image: none !important;
+    border: none !important;
+  }
 }
 select {
   background: transparent;

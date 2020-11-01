@@ -1,6 +1,7 @@
 <template>
   <div class="card" @click="$router.push('/content/' + card.id)">
     <span>
+      <tag-display-card :tags="card.tags" :style="'margin-bottom: 10px;'"></tag-display-card>
       {{ card.date }}
       <span v-if="card.publisher"> &#8226; {{ card.publisher }}</span>
       <span v-if="card.author"> &#8226; By: {{ card.author }}</span>
@@ -12,10 +13,15 @@
 </template>
 
 <script>
+import TagDisplayCard from "@/components/TagDisplayCard.vue";
+
 export default {
   name: "CardContent",
   props: {
     card: Object,
+  },
+  components: {
+    TagDisplayCard,
   },
 };
 </script>

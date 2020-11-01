@@ -9,7 +9,7 @@
             <div id="add-feed">
               <form @submit.prevent="submitForm" novalidate="true" ref="form">
                 <div class="row">
-                  <div class="col-4 col-sm-6">
+                  <div class="col-3 col-sm-4">
                     <input
                       type="text"
                       v-model="form.url"
@@ -18,7 +18,7 @@
                       required
                     />
                   </div>
-                  <div class="col-4 col-sm-4">
+                  <div class="col-2 col-sm-3">
                     <input
                       type="text"
                       v-model="form.title"
@@ -26,6 +26,12 @@
                       autocomplete="off"
                       required
                     />
+                  </div>
+                  <div class="col-3 col-sm-3">
+                    <tag-field
+                      :tags="form.tags"
+                      @updateTags="updateTags"
+                    ></tag-field>
                   </div>
                   <div class="col-4 col-sm-2">
                     <button>
@@ -45,7 +51,10 @@
               :key="feed.id"
             ></feed-card>
           </div>
-          <error v-if="content.length < 1 && loading == false" :text="'No results found.'"></error>
+          <error
+            v-if="content.length < 1 && loading == false"
+            :text="'No results found.'"
+          ></error>
           <loader v-if="loading == true"></loader>
           <error v-if="error == true" :text="errorText"></error>
         </div>
@@ -62,6 +71,7 @@ import axios from "axios";
 import toastr from "toastr";
 import Configuration from "@/configuration.js";
 import Pristine from "pristinejs";
+import TagField from "@/components/TagField.vue";
 
 const apiRoot = Configuration.value("apiRoot");
 
@@ -73,6 +83,7 @@ export default {
   components: {
     Loader,
     Error,
+    TagField,
     FeedCard,
   },
   data: function () {
@@ -80,6 +91,8 @@ export default {
       form: {
         title: "",
         url: "",
+        tags: [],
+        tags_id: [],
       },
       content: [],
       loading: true,
@@ -128,6 +141,7 @@ export default {
               title: this.form.title,
               url: this.form.url,
               last_updated: null,
+              tags: response.data.tags,
             });
             this.form.title = "";
             this.form.url = "";
@@ -141,6 +155,9 @@ export default {
           });
       }
     },
+    updateTags(tags) {
+      this.form.tags_id = tags;
+    }
   },
 };
 </script>

@@ -50,6 +50,8 @@ export default {
         publisher: "",
         date: null,
         richtext: false,
+        tags: [],
+        tags_id: [],
       },
       content: null,
       loading: false,
@@ -82,6 +84,7 @@ export default {
           this.form.publisher = "";
           this.form.date = null;
           this.form.richtext = false;
+          this.form.tags = [];
         })
         .catch((error) => {
           console.log(error);
