@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     userAuthenticated: Vue.$cookies.isKey('token'),
     search: '',
-    version: '0.1.2',
+    version: '0.1.3',
   },
   mutations: {
   },
