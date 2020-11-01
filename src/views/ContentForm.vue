@@ -9,6 +9,10 @@
             <option value="note">Note</option>
           </select>
         </div>
+        <div class="col-6">
+          <label>Tags</label>
+          <tag-field :tags="form.tags" @updateTags="updateTags"></tag-field>
+        </div>
       </div>
       <div class="divider"></div>
       <div class="row">
@@ -113,6 +117,7 @@ import Pristine from "pristinejs";
 import toastr from "toastr";
 import autosize from "autosize";
 import Configuration from "@/configuration.js";
+import TagField from "@/components/TagField.vue";
 
 const apiRoot = Configuration.value("apiRoot");
 
@@ -120,6 +125,9 @@ export default {
   props: {
     form: Object,
     submitLoading: Boolean,
+  },
+  components: {
+    TagField,
   },
   data: function () {
     return {
@@ -159,6 +167,9 @@ export default {
           });
       }
     },
+    updateTags(tags) {
+      this.form.tags_id = tags;
+    }
   },
   mounted() {
     IMask(this.$refs.date, {
@@ -210,7 +221,7 @@ export default {
       this.$nextTick(function () {
         autosize.update(this.$refs.content);
       });
-    },
+    }
   },
 };
 </script>

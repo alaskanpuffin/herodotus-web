@@ -7,6 +7,7 @@
         <span v-if="formattedDate">{{ formattedDate }}</span>
         <span v-else>Never</span>
       </p>
+      <tag-display-card :tags="feed.tags" :style="'margin-top: 5px;'"></tag-display-card>
     </div>
     <div id="actions">
       <a id="delete-feed" @click="deleteFeed">
@@ -21,12 +22,16 @@
 import axios from "axios";
 import toastr from "toastr";
 import Configuration from "@/configuration.js";
+import TagDisplayCard from "@/components/TagDisplayCard.vue";
 
 const apiRoot = Configuration.value("apiRoot");
 
 export default {
   name: "FeedCard",
   props: ["feed"],
+  components: {
+    TagDisplayCard,
+  },
   data: function () {
     return {
       loading: false,

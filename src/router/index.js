@@ -46,6 +46,10 @@ Vue.use(VueRouter)
         component: () => import('../views/GeneralSettings.vue')
       },
       {
+        path: 'tags',
+        component: () => import('../views/TagSettings.vue')
+      },
+      {
         path: 'users',
         component: () => import('../views/UserSettings.vue')
       },

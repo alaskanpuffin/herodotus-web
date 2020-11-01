@@ -1,6 +1,7 @@
 <template>
   <div id="nav">
     <router-link to="/settings/general">General</router-link>
+    <router-link to="/settings/tags">Tags</router-link>
     <router-link to="/settings/users">Users</router-link>
   </div>
 </template>
